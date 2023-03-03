@@ -1,0 +1,34 @@
+.navbar__conteiner{
+    width: 262px;
+    height: 50px;
+    background-color: darkgray;
+    border-top: 3px solid #696969;
+    border-left: 3px solid #696969;
+    border-bottom: 3px solid #fff;
+    border-right: 3px solid #fff;
+    padding: 0 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timer{
+    display: flex;
+    height: 23px;
+    width: 39px;
+}
+
+.timer__item{
+    width: 13px;
+    height: 23px;
+    background: url(../sprite.png) no-repeat;
+}
+
+.smile-bottom{
+    height: 27px;
+    width: 27px;
+    background: url(../sprite.png) no-repeat;
+    background-position-y: -24px;
+    /* background-position-x: 0; */
+}
+

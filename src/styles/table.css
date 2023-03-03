@@ -1,0 +1,21 @@
+
+.table__conteiner{
+    width: 272px;
+    height: 272px;
+    background-color: rgb(191, 191, 191);
+    border-top: 3px solid #696969;
+    border-left: 3px solid #696969;
+    border-bottom: 3px solid #fff;
+    border-right: 3px solid #fff;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.table__item{
+    height: 17px;
+    width: 17px;
+    background: url(../sprite.png) no-repeat;
+    background-position-y: -50px;
+}
