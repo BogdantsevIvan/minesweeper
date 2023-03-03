@@ -8,7 +8,9 @@ const Table = (props) => {
     const Size = 16;
     const dim = new Array(Size).fill(null);
     var [countOpen, setCountOpen] = useState(0);//количество верных открытых ячеек
+    var [Bomb, setBomb] = useState(10000);
 
+    let [field, setFieald] = useState(() => createField(Size, 0));
     let [itemsCondition, setItemsCondition] = useState(() => createField(Size));//состояние элемента таблицы
     //ячейка закрыта-0, открыта-1, поставлен флаг-2, поставлен вопрос-3
 
@@ -33,7 +35,32 @@ const Table = (props) => {
             }
             return;
         }
-    })
+    }, [props.restart, field, itemsCondition, Size])
+
+    useEffect(() => {//обновление стилей при победе или поражении
+        if (props.isWin || props.isLoss) {
+            for (let i = 0; i < 16; i++) {
+                for (let j = 0; j < 16; j++) {
+                    if (props.isWin) {
+                        if (field[i * Size + j] === Mine) {
+                            document.getElementById(j + i * Size).setAttribute('style',
+                                'background-position: -34px -50px');
+                            itemsCondition[i * Size + j] = 2;
+                        }
+                    } else {
+                        if (field[i * Size + j] === Mine && itemsCondition[i * Size + j] !== 2 && Bomb !== i * Size + j) {
+                            document.getElementById(i * Size + j).setAttribute('style',
+                                'background-position: -85px -50px');
+                        }
+                        if (((itemsCondition[i * Size + j]) === 2 || itemsCondition[i * Size + j] === 3) && field[i * Size + j] !== Mine) {
+                            document.getElementById(i * Size + j).setAttribute('style',
+                                'background-position: -119px -50px');
+                        }
+                    }
+                }
+            }
+        }
+    }, [props.isWin, props.isLoss, Bomb, Mine, itemsCondition, field])
 
     function createField(Size) {//создание массива со значениями элементов таблицы
         //значение мина:-1, число-количество мин в соседней клетке
@@ -76,32 +103,6 @@ const Table = (props) => {
         return;
     }
 
-    function Lose(x, y) {//обновление стилей при проигрыше
-        for (let i = 0; i < 16; i++) {
-            for (let j = 0; j < 16; j++) {
-                if (field[i * Size + j] === Mine && itemsCondition[i * Size + j] !== 2 && !props.isLoss) {
-                    document.getElementById(i * Size + j).setAttribute('style',
-                        'background-position: -85px -50px');
-                }
-                if (((itemsCondition[i * Size + j]) === 2 || itemsCondition[i * Size + j] === 3) && field[i * Size + j] !== Mine) {
-                    document.getElementById(i * Size + j).setAttribute('style',
-                        'background-position: -119px -50px');
-                }
-            }
-        }
-        if (!props.isLoss) {
-            document.getElementById(y * Size + x).setAttribute('style',
-                'background-position: -102px -50px');
-        }
-        props.setIsLoss(true);
-    }
-
-    function Win(countOpen) {//обновление стилей при победе
-        if (countOpen >= Size ** 2 - 41) {
-            props.setIsWin(true);
-        }
-    }
-
     function isOpen(x, y) {//проверка на допустимость открытия ячейки
         let buf = false;
         if (itemsCondition[y * Size + x] === 1 || itemsCondition[y * Size + x] === 2
@@ -114,7 +115,12 @@ const Table = (props) => {
     function updateBGAndCondition(x, y) {//обновлениие стилей ячеек при их открытии
 
         if (field[y * Size + x] === Mine) {
-            Lose(x, y);
+            if (!props.isLoss) {
+                setBomb(prev => y * Size + x);
+                document.getElementById(y * Size + x).setAttribute('style',
+                    'background-position: -102px -50px');
+            }
+            props.setIsLoss(true);
             return;
         }
         let zeroItems = [];
@@ -138,7 +144,9 @@ const Table = (props) => {
             itemsCondition[y * Size + x] = 1
             setCountOpen(countOpen => countOpen + 1);
         }
-        Win(countOpen);
+        if (countOpen >= Size ** 2 - 41) {
+            props.setIsWin(true);
+        }
         return;
     }
 
@@ -158,8 +166,6 @@ const Table = (props) => {
             itemsCondition[y * Size + x] = 0;
         }
     }
-
-    let [field, setFieald] = useState(() => createField(Size, 0));
 
     return (
         <div className='table__conteiner'>
@@ -190,6 +196,7 @@ const Table = (props) => {
                                 e.stopPropagation();
                                 setFlagOrQuestion(x, y)
                             }}>
+                            {field[y * Size + x]}
                         </div>)
                     })}
                 </div>)
