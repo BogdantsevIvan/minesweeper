@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/https//BogdantsevIvan.github.io/minesweeper/static/css/main.239b511f.css",
+    "main.js": "/https//BogdantsevIvan.github.io/minesweeper/static/js/main.78273c59.js",
+    "index.html": "/https//BogdantsevIvan.github.io/minesweeper/index.html",
+    "main.239b511f.css.map": "/https//BogdantsevIvan.github.io/minesweeper/static/css/main.239b511f.css.map",
+    "main.78273c59.js.map": "/https//BogdantsevIvan.github.io/minesweeper/static/js/main.78273c59.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.239b511f.css",
+    "static/js/main.78273c59.js"
+  ]
+}
