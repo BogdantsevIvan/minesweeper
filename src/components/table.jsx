@@ -23,6 +23,7 @@ const Table = (props) => {
 
     useEffect(() => {
         if (props.restart) {//обнуление стилей и значения при перезапуске игры
+            setCountOpen(countOpen => 0);
             for (let i = 0; i < 16; i++) {
                 for (let j = 0; j < 16; j++) {
                     document.getElementById(j + i * Size).removeAttribute('style');
@@ -98,7 +99,6 @@ const Table = (props) => {
     function Win(countOpen) {//обновление стилей при победе
         if (countOpen >= Size ** 2 - 41) {
             props.setIsWin(true);
-            setCountOpen(countOpen => 0);
         }
     }
 
