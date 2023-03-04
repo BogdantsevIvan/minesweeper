@@ -6,11 +6,11 @@ import '../styles/table.css';
 const Table = (props) => {
     const Mine = -1;
     const Size = 16;
-    const dim = new Array(Size).fill(null);
+    const dim = new Array(Size).fill(null);//массив для создания поля
     var [countOpen, setCountOpen] = useState(0);//количество верных открытых ячеек
     var [Bomb, setBomb] = useState(10000);
 
-    let [field, setFieald] = useState(() => createField(Size, 0));
+    let [field, setFieald] = useState(() => createField(Size, 0));//массив значений ячеек поля
     let [itemsCondition, setItemsCondition] = useState(() => createField(Size));//состояние элемента таблицы
     //ячейка закрыта-0, открыта-1, поставлен флаг-2, поставлен вопрос-3
 
@@ -196,7 +196,6 @@ const Table = (props) => {
                                 e.stopPropagation();
                                 setFlagOrQuestion(x, y)
                             }}>
-                            {field[y * Size + x]}
                         </div>)
                     })}
                 </div>)
